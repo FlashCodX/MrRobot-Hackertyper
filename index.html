@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mr Robot HackerTyper</title>
+    <style>
+        main {opacity: .9;}
+        body {background: black;overflow: hidden;user-select: none;}
+        div {color: green;font-weight:900;overflow: scroll;position: absolute;z-index: 1;white-space: pre-wrap;height: 100vh;}
+        ::-webkit-scrollbar {width: 0;overflow: hidden;}
+        video {opacity: .4;z-index: -1; width: 100%;object-fit: cover;height: 100vh}
+    </style>
+    <script>
+        let v
+        let t
+        let c
+        let cs
+        let w = 0
+        document.addEventListener('DOMContentLoaded', async () => {const init = () => {
+                const a = document.createElement("main")
+                c = document.createElement("div")
+                a.appendChild(c)
+                v = document.createElement('video')
+                v.src = './assets/video.mp4'
+                a.appendChild(v)
+                document.body.appendChild(a)
+            }
+            await fetch('./assets/code').then(async (r) => r.text().then(async (c) => cs = c))
+            init()
+            document.addEventListener("keyup", () => write())
+            window.oncontextmenu = () => false
+            const write = () => {c.innerHTML = cs.slice(0, w)
+                c['scrollTop'] = c['scrollHeight'];
+                v.play()
+                clearTimeout(t)
+                t = setTimeout(() => v.pause(), 300)
+                w + 10 >= cs.length-1 ? w = 0 : w = w + 10
+            }
+        })
+    </script>
+</head>
+<body></body>
+</html>
